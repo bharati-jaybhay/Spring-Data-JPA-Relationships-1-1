@@ -54,4 +54,42 @@ public class AppDao {
         }
     }
 
+    @Transactional
+    public String deleteByRollNO(int rollNo) {
+        Student student = getStudentByRollNo(rollNo);
+        if (student != null) {
+            entityManager.remove(student);
+            return "Deleted successfully";
+        } else {
+            return "Not Found!!";
+        }
+    }
+
+    public Address getStudentByAddressId(int addressId) {
+        return entityManager.find(Address.class, addressId);
+    }
+
+    @Transactional
+    public Student updateAddressById(int rollNo, Address address) {
+        Student student=entityManager.find(Student.class, rollNo);
+        if(student != null){
+            student.setAddress(address);
+            return entityManager.merge(student);
+        }else{
+            return null;
+        }
+    }
+
+    @Transactional
+    public String deleteAddressById(int addressId) {
+        Address address= entityManager.find(Address.class, addressId);
+        if(address != null){
+            Student student=address.getStudent();
+            student.setAddress(null);
+            entityManager.remove(address);
+            return "Deleted Successfully";
+        }else{
+            return "not found!!";
+        }
+    }
 }

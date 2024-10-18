@@ -7,6 +7,7 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.engine.jdbc.Size;
+import org.springframework.data.annotation.Reference;
 
 import java.time.LocalDateTime;
 
@@ -35,6 +36,7 @@ public class Student {
         private LocalDateTime lastUpdated;
 
         @OneToOne(cascade = CascadeType.ALL)
+        @JoinColumn(name = "address_address_id")
         @JsonManagedReference
         private Address address;
 }
